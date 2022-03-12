@@ -8,21 +8,32 @@ import { Container, Row, Col } from "react-bootstrap";
 
 function Input() {
   const [data, setData] = useState([]);
-  const [name, setName] = useState("");
-  const [classs, setClass] = useState("");
-  const [section, setSec] = useState("");
+
+  const [val, setVal] = useState({
+    name: "",
+    class: "",
+    section: "",
+  });
 
   const saveData = () => {
-    const usr = {
-      name,
-      classs,
-      section,
-    };
-    setData([...data, usr]);
+    setData([...data, val]);
+    setVal({
+      name: "",
+      class: "",
+      section: "",
+    });
   };
 
   const filterItems = (id) => {
     setData(data.filter((prop, index) => index !== id));
+  };
+
+  const updateData = (data) => {
+    setVal({
+      name: data.name,
+      class: data.class,
+      section: data.section,
+    });
   };
 
   return (
@@ -33,8 +44,15 @@ function Input() {
           <TextField
             id="demo-helper-text-misaligned-no-helper"
             label="Name"
+            value={val.name}
             onChange={(e) => {
-              setName(e.target.value);
+              setVal((prevState) => {
+                return {
+                  name: e.target.value,
+                  class: prevState.class,
+                  section: prevState.section,
+                };
+              });
             }}
           />
         </Row>
@@ -42,8 +60,15 @@ function Input() {
           <TextField
             id="demo-helper-text-misaligned-no-helper"
             label="Class"
+            value={val.class}
             onChange={(e) => {
-              setClass(e.target.value);
+              setVal((prevState) => {
+                return {
+                  name: prevState.name,
+                  class: e.target.value,
+                  section: prevState.section,
+                };
+              });
             }}
           />
         </Row>
@@ -51,8 +76,15 @@ function Input() {
           <TextField
             id="demo-helper-text-misaligned-no-helper"
             label="Section"
+            value={val.section}
             onChange={(e) => {
-              setSec(e.target.value);
+              setVal((prevState) => {
+                return {
+                  name: prevState.name,
+                  class: prevState.class,
+                  section: e.target.value,
+                };
+              });
             }}
           />
         </Row>
@@ -70,7 +102,11 @@ function Input() {
           </Col>
         </Row>
       </Container>
-      <BasicTable state={data} deleteItem={filterItems} />
+      <BasicTable
+        state={data}
+        deleteItem={filterItems}
+        updateItem={updateData}
+      />
     </>
   );
 }

@@ -33,7 +33,7 @@ function BasicTable(props) {
                   {index + 1}
                 </TableCell>
                 <TableCell align="right">{row.name}</TableCell>
-                <TableCell align="right">{row.classs}</TableCell>
+                <TableCell align="right">{row.class}</TableCell>
                 <TableCell align="right">{row.section}</TableCell>
                 <TableCell align="right">
                   <Button
@@ -46,7 +46,14 @@ function BasicTable(props) {
                   >
                     <DeleteIcon />
                   </Button>
-                  <Button variant="outlined" color="secondary" className="mx-2">
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    className="mx-2"
+                    onClick={() => {
+                      props.updateItem(row);
+                    }}
+                  >
                     Update
                   </Button>
                 </TableCell>
