@@ -22,6 +22,7 @@ function Input() {
       class: "",
       section: "",
     });
+    postDetails(val);
   };
 
   const filterItems = (id) => {
@@ -34,6 +35,18 @@ function Input() {
       class: data.class,
       section: data.section,
     });
+  };
+
+  const postDetails = async (data) => {
+    const result = await fetch("http://localhost:8000/home", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const resultInJson = await result.json();
+    console.log(resultInJson);
   };
 
   return (
